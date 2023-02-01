@@ -1,0 +1,10 @@
+TAC test
+DB setup
+
+-Dcom.arjuna.ats.arjuna.coordinator.defaultTimeout=120
+
+srvctl relocate service -db cdb19a -service tacservice -oldinst cdb19a1 -newinst cdb19a2 -force -stopoption IMMEDIATE
+srvctl modify service -db cdb19a -service tacservice -modifyconfig -preferred cdb19a1 -available cdb19a2
+srvctl add service -db cdb19a -service TACSERVICE -pdb WKAA -preferred cdb19a1,cdb19a2 -available cdb19a3,cdb19a4 -failover_restore AUTO -commit_outcome TRUE -failovertype AUTO -replay_init_time 600 -retention 86400 -notification TRUE -drain_timeout 120 -stopoption IMMEDIATE -role PRIMARY
+
+
