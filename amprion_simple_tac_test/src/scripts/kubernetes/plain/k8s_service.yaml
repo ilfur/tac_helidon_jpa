@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  edge-snomed-service
+spec:
+  selector:
+      app.kubernetes.io/instance: edge-snomed
+      app.kubernetes.io/name: edge-snomed
+  ports:
+    - protocol: TCP
+      port: 9999
+      targetPort: 9999
+  type: LoadBalancer
+

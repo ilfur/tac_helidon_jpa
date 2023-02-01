@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  edge-snomed-deployment
+  labels:
+    app.kubernetes.io/instance: edge-snomed
+    app.kubernetes.io/name: edge-snomed
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: edge-snomed
+      app.kubernetes.io/name: edge-snomed
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: edge-snomed
+        app.kubernetes.io/name: edge-snomed
+    spec:
+      containers:
+        - name: edge-snomed
+          image: docker.io/shoening/edge-snomed:1.0
+          ports:
+            - containerPort: 9999
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /root/edge_pseudonym_file_upload/config
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: config
+          secret:
+            secretName: edge-snomed-secret
+

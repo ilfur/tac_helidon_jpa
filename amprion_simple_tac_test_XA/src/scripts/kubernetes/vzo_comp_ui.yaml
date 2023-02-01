@@ -1,0 +1,35 @@
+apiVersion: core.oam.dev/v1alpha2
+kind: Component
+metadata:
+  name: edge-snomed-ui-component
+spec:
+  workload:
+    apiVersion: oam.verrazzano.io/v1alpha1
+    kind: VerrazzanoHelidonWorkload
+    metadata:
+      name: edge-snomed-ui-workload
+      labels:
+        app: edge-snomed
+        version: v1
+    spec:
+      deploymentTemplate:
+        metadata:
+          name: edge-snomed-ui-deployment
+        podSpec:
+          containers:
+            - name: edge-snomed-ui-container
+              image: docker.io/ilfur/edge_snomed_ui:1.0
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080
+                  name: http
+                  #imagePullSecrets:
+                  #- name: docker-secret
+              volumeMounts:
+                - mountPath: /html/ui
+                  name: web
+          volumes:
+            - name: web
+              persistentVolumeClaim:
+                claimName: snomed-ui-pvc
+

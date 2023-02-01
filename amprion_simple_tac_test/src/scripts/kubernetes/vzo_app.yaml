@@ -1,0 +1,41 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+apiVersion: core.oam.dev/v1alpha2
+kind: ApplicationConfiguration
+metadata:
+  name: edge-snomed-appconf
+  annotations:
+    version: v1.0.0
+    description: "lupus poc edge application"
+spec:
+  components:
+    - componentName: edge-snomed-secret-component
+    - componentName: edge-snomed-ui-component
+      traits:
+        - trait:
+            apiVersion: oam.verrazzano.io/v1alpha1
+            kind: IngressTrait
+            metadata:
+              name: edge-snomed-ui-ingress
+            spec:
+              rules:
+                - paths:
+                    - path: "/ui"
+                      pathType: Prefix
+    - componentName: edge-snomed-component
+      traits:
+        - trait:
+            apiVersion: oam.verrazzano.io/v1alpha1
+            kind: MetricsTrait
+            spec:
+                scraper: verrazzano-system/vmi-system-prometheus-0
+        - trait:
+            apiVersion: oam.verrazzano.io/v1alpha1
+            kind: IngressTrait
+            metadata:
+              name: edge-snomed-ingress
+            spec:
+              rules:
+                - paths:
+                    - path: "/edge/snomed"
+                      pathType: Prefix

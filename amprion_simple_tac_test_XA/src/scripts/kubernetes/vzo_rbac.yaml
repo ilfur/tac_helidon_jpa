@@ -1,0 +1,30 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: oam-kubernetes-runtime-secrets
+rules:
+  - apiGroups: [""]
+    resources:
+    - secrets
+    - pvc
+    verbs: 
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: oam-kubernetes-runtime-secrets
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: oam-kubernetes-runtime-secrets
+subjects:
+  - kind: ServiceAccount
+    name: oam-kubernetes-runtime
+    namespace: verrazzano-system
+

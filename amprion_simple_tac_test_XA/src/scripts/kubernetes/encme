@@ -1,0 +1,7 @@
+
+# DataSource class name for UploadMetaData datasource
+javax.sql.DataSource.DocumedUnit.driverClassName = oracle.jdbc.driver.OracleDriver
+javax.sql.DataSource.DocumedUnit.url = jdbc:oracle:thin:@//130.61.106.59:1521/PDB19c.publicdevnet.k8snet.oraclevcn.com
+javax.sql.DataSource.DocumedUnit.user = documed
+javax.sql.DataSource.DocumedUnit.password = documed
+

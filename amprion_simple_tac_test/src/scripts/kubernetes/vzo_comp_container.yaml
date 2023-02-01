@@ -1,0 +1,35 @@
+# Copyright (c) 2020, 2021, Oracle and/or its affiliates.
+# Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
+apiVersion: core.oam.dev/v1alpha2
+kind: Component
+metadata:
+  name: edge-snomed-component
+spec:
+  workload:
+    apiVersion: oam.verrazzano.io/v1alpha1
+    kind: VerrazzanoHelidonWorkload
+    metadata:
+      name: edge-snomed-workload
+      labels:
+        app: edge-snomed
+        version: v1
+    spec:
+      deploymentTemplate:
+        metadata:
+          name: edge-snomed-deployment
+        podSpec:
+          containers:
+            - name: edge-snomed-container
+              image: docker.io/ilfur/edge-snomed:1.0
+              volumeMounts:
+                - name: config
+                  mountPath: /edge-snomed/config
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8081
+                  name: http
+          volumes:
+            - name: config
+              secret:
+                secretName: edge-snomed-secret
+

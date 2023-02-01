@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+  <persistence-unit name="DeptEmpUnit" transaction-type="RESOURCE_LOCAL">
+	  <description>The TAC Dept/Emp database.</description>
+
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+    <non-jta-data-source>DeptEmpDataSource</non-jta-data-source>
+
+    <class>com.oracle.tac.pushData.Department</class>
+    <class>com.oracle.tac.pushData.Employee</class>
+
+    <properties>
+      <!-- EclipseLink Properties -->
+      <property name="eclipselink.weaving" value="false" />
+      <property name="eclipselink.deploy-on-startup" value="true"/>
+      <property name="eclipselink.jdbc.native-sql" value="true"/>
+      <property name="eclipselink.logging.logger" value="JavaLogger"/>
+      <property name="eclipselink.logging.parameters" value="true"/>
+      <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.OraclePlatform"/>
+      <property name="eclipselink.target-server" value="io.helidon.integrations.cdi.eclipselink.CDISEPlatform"/>
+      <property name="eclipselink.jdbc.batch-writing" value="JDBC"/>
+      <property name="eclipselink.jdbc.batch-writing.size" value="100"/>
+    </properties>
+  </persistence-unit>
+
+</persistence>
